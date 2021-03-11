@@ -1,0 +1,117 @@
+mode: sr
+gpu_ids: [0]
+scale: 4
+degradation: NETWORK
+is_train: false
+use_chop: true
+self_ensemble: false
+save_image: true
+run_range: 1
+img_range: 2047
+
+
+# test data sets
+datasets:
+#    test_set1:
+#        name: WV2
+#        mode: LRHRLRPAN
+#        img_range: 2047
+#        dataroot_HR: /home/lai/Documents/Pycharm/data/PanSharp_dataset/WV2/test/MTF/8bands/HRMS
+#        dataroot_LR: /home/lai/Documents/Pycharm/data/PanSharp_dataset/WV2/test/MTF/8bands/LRMS
+#        dataroot_PAN: /home/lai/Documents/Pycharm/data/PanSharp_dataset/WV2/test/MTF/8bands/LRPAN
+#        dataroot_LRPAN: /home/lai/Documents/Pycharm/data/PanSharp_dataset/WV2/test/MTF/8bands/LLRPAN
+#        data_type: npy
+
+    test_set2:
+        name: QB_full
+        mode: MSPAN
+        img_range: 2047
+#        dataroot_HR: /home/lai/Documents/Pycharm/data/PanSharp_dataset/WV2/test/MTF/8bands/HRMS
+        dataroot_LR: /home/lai/Documents/Pycharm/data/PanSharp_dataset/QB/test/MS_full_resolution/MS_npy
+        dataroot_PAN: /home/lai/Documents/Pycharm/data/PanSharp_dataset/QB/test/PAN_full_resolution/PAN_npy
+        data_type: npy
+#
+#    test_set3:
+#        name: QB_full
+#        mode: MSPANLRPAN
+#        img_range: 2047
+#        dataroot_PAN: /home/lai/Documents/Pycharm/data/PanSharp_dataset/QB/test/PAN_full_resolution/PAN_npy
+#        dataroot_LR: /home/lai/Documents/Pycharm/data/PanSharp_dataset/QB/test/MS_full_resolution/MS_npy
+#        dataroot_LRPAN: /home/lai/Documents/Pycharm/data/PanSharp_dataset/QB/test/MTF/4bands/LRPAN_npy
+#        data_type: npy
+
+#    test_set4:
+#        name: QB
+#        mode: LRHR
+#        img_range: 2047
+#        dataroot_HR: /home/lai/Documents/Pycharm/data/PanSharp_dataset/QB/value/MTF/4/HRMS_npy
+#        dataroot_LR: /home/lai/Documents/Pycharm/data/PanSharp_dataset/QB/value/MTF/4/LRMS_npy
+#        dataroot_PAN: /home/lai/Documents/Pycharm/data/PanSharp_dataset/QB/value/MTF/4/LRPAN_npy
+#        data_type: npy
+#
+#    test_set5:
+#        name: fix4_rand
+#        mode: LRHR
+#        img_range: 2047
+#        dataroot_HR: /home/server606/clh/QB_dataset/single/4bands_random/value/HR_npy
+#        dataroot_LR: /home/server606/clh/QB_dataset/single/4bands_random/value/LR_npy
+#        dataroot_PAN: /home/server606/clh/QB_dataset/single/4bands_random/value/PAN_npy
+#        data_type: npy
+#
+#    test_set6:
+#        name: mix1
+#        mode: LRHR
+#        img_range: 2047
+#        dataroot_HR: /home/server606/clh/QB_dataset/mix/mix1/value/HR_npy
+#        dataroot_LR: /home/server606/clh/QB_dataset/mix/mix1/value/LR_npy
+#        dataroot_PAN: /home/server606/clh/QB_dataset/mix/mix1/value/PAN_npy
+#        data_type: npy
+#
+#    test_set7:
+#        name: mix2
+#        mode: LRHR
+#        img_range: 2047
+#        dataroot_HR: /home/server606/clh/QB_dataset/mix/mix2/value/HR_npy
+#        dataroot_LR: /home/server606/clh/QB_dataset/mix/mix2/value/LR_npy
+#        dataroot_PAN: /home/server606/clh/QB_dataset/mix/mix2/value/PAN_npy
+#        data_type: npy
+#
+#    test_set8:
+#        name: mix3
+#        mode: LRHR
+#        img_range: 2047
+#        dataroot_HR: /home/server606/clh/QB_dataset/mix/mix3/value/HR_npy
+#        dataroot_LR: /home/server606/clh/QB_dataset/mix/mix3/value/LR_npy
+#        dataroot_PAN: /home/server606/clh/QB_dataset/mix/mix3/value/PAN_npy
+#        data_type: npy
+#
+#    test_set9:
+#        name: mix4
+#        mode: LRHR
+#        img_range: 2047
+#        dataroot_HR: /home/server606/clh/QB_dataset/mix/mix4_rand/value/HR_npy
+#        dataroot_LR: /home/server606/clh/QB_dataset/mix/mix4_rand/value/LR_npy
+#        dataroot_PAN: /home/server606/clh/QB_dataset/mix/mix4_rand/value/PAN_npy
+#        data_type: npy
+
+
+# hyper-parameters of network architecture
+networks:
+    which_model: MSGU_PANG_INTER_LOSS # this value must be same with the filename of 'your_network_name'.py
+    hid_dim: 64
+    input_dim: 64
+    num_layers: 15
+    num_features: 64
+    in_channels: 4
+    out_channels: 4
+    scale: 4
+    num_cycle: 5
+    num_resblocks: 1
+    numFe: 64
+    num_block: 3
+    num_group: 4
+
+
+# the path of pre-trained model
+solver:
+    pretrained_path: /home/lai/Desktop/RS/Ablation/MSGU_PANG_INTER_LOSS_in4f64_x4/epochs/best_ckp.pth

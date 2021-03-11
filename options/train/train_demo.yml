@@ -1,0 +1,137 @@
+mode: sr
+gpu_ids: [0]
+scale: 4
+is_train: true
+run_range: 1
+save_image: false
+img_range: 4095
+#collate_fn: my_collate
+
+datasets:
+#    train1: # train datasets
+#            name: FIX4
+#            mode: LRHR
+##            subset: [0, 0.25]
+#            img_range: 2047
+#            dataroot_HR: ../PanSharp_dataset/QB_20200922/train/MTF/4bands_sort/HRMS_npy
+#            dataroot_LR: ../PanSharp_dataset/QB_20200922/train/MTF/4bands_sort/LRMS_npy
+#            dataroot_PAN: ../PanSharp_dataset/QB_20200922/train/MTF/4bands_sort/LRPAN_npy
+#            data_type: npy
+#            n_workers: 4
+#            batch_size: 8
+#            LR_size: 16
+#            use_flip: true
+#            use_rot: true
+#            noise: .
+
+#    train2: # train datasets
+#        name: IK
+#        mode: LRHR
+##        subset: [0, 0.25]
+#        img_range: 2047
+#        dataroot_HR: /media/clh/Files/PanSharp_dataset_20200922/IK/train/MTF/4bands/HRMS_npy
+#        dataroot_LR: /media/clh/Files/PanSharp_dataset_20200922/IK/train/MTF/4bands/LRMS_npy
+#        dataroot_PAN: /media/clh/Files/PanSharp_dataset_20200922/IK/train/MTF/4bands/LRPAN_npy
+#        data_type: npy
+#        n_workers: 4
+#        batch_size: 8
+#        LR_size: 16
+#        use_flip: true
+#        use_rot: true
+#        noise: .
+#
+    train3: # train datasets
+        name: P
+        mode: LRHR
+#        subset: [0.25, 0.5]
+        img_range: 2047
+        dataroot_HR: /home/lai/Documents/Pycharm/data/Previous_data/P/npy/train/HR_npy
+        dataroot_LR: /home/lai/Documents/Pycharm/data/Previous_data/P/npy/train/LR_npy
+        dataroot_PAN: /home/lai/Documents/Pycharm/data/Previous_data/P/npy/train/PAN_npy
+        data_type: npy
+        n_workers: 4
+        batch_size: 8
+        LR_size: 16
+        use_flip: true
+        use_rot: true
+        noise: .
+##
+#    train3: # train datasets
+#        name: Fix3
+#        mode: LRHR
+#        subset: [0.5, 0.75]
+#        img_range: 2047
+#        dataroot_HR: /home/server606/clh/QB_dataset/single/3bands/train/HR
+#        dataroot_LR: /home/server606/clh/QB_dataset/single/3bands/train/LR
+#        dataroot_PAN: /home/server606/clh/QB_dataset/single/3bands/train/PAN
+#        data_type: npy
+#        n_workers: 4
+#        batch_size: 8
+#        LR_size: 16
+#        use_flip: true
+#        use_rot: true
+#        noise: .
+##
+#    train4: # train datasets
+#        name: Fix4_Rand
+#        mode: LRHR
+#        subset: [0.75, 1]
+#        img_range: 2047
+#        dataroot_HR: /home/server606/clh/QB_dataset/single/4bands_random/train/HR
+#        dataroot_LR: /home/server606/clh/QB_dataset/single/4bands_random/train/LR
+#        dataroot_PAN: /home/server606/clh/QB_dataset/single/4bands_random/train/PAN
+#        data_type: npy
+#        n_workers: 4
+#        batch_size: 8
+#        LR_size: 16
+#        use_flip: true
+#        use_rot: true
+#        noise: .
+
+    val: # validation datasets
+        name: FIX4
+        mode: LRHR
+        img_range: 2047
+        data_type: npy
+        # QB val
+#        dataroot_HR: ../PanSharp_dataset/QB_20200922/value/MTF/4bands_sort/HRMS_npy
+#        dataroot_LR: ../PanSharp_dataset/QB_20200922/value/MTF/4bands_sort/LRMS_npy
+#        dataroot_PAN: ../PanSharp_dataset/QB_20200922/value/MTF/4bands_sort/LRPAN_npy
+        # IK val
+#        dataroot_HR: /media/clh/Files/PanSharp_dataset_20200922/IK/value/MTF/4bands/HRMS_npy
+#        dataroot_LR: /media/clh/Files/PanSharp_dataset_20200922/IK/value/MTF/4bands/LRMS_npy
+#        dataroot_PAN: /media/clh/Files/PanSharp_dataset_20200922/IK/value/MTF/4bands/LRPAN_npy
+        # WV2 val
+        dataroot_HR: /home/lai/Documents/Pycharm/data/Previous_data/P/npy/value/HR_npy
+        dataroot_LR: /home/lai/Documents/Pycharm/data/Previous_data/P/npy/value/LR_npy
+        dataroot_PAN: /home/lai/Documents/Pycharm/data/Previous_data/P/npy/value/PAN_npy
+
+## hyper-parameters for network architecture
+networks:
+    which_model: BIEDN  # this value must be same with the filename of 'your_network_name'.py
+    hid_dim: 64
+    input_dim: 64
+    num_layers: 12 # number of 3x3 conv layers in recurrent unit, recommand nx4
+    encoder_num_layers: 8
+    num_features: 64
+    in_channels: 4
+    out_channels: 3
+    scale: 4
+
+# the setting for optimizer, loss function, learning_strategy, etc.
+solver:
+    type: ADAM
+    learning_rate: 0.0001
+    weight_decay: 0
+    lr_scheme: MultiStepLR
+    lr_steps: [200, 400, 600, 800]
+    lr_gamma: 0.5
+    loss_type: l1
+    manual_seed: 0
+    num_epochs: 1000
+    skip_threshold: 100
+    save_ckp_step: 1000
+    save_vis_step: 1 # be useful only when save_image is true
+    pretrain: null
+    pretrained_path: /home/server606/clh/pansharpening_200625/experiments/CONVLSTMV1_in4f32_x4/epochs/last_ckp.pth
+
